@@ -1,5 +1,7 @@
 # TestMaterialDesign
 
+PluralSight course from Ajden Towfeek about Material Design
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.5.
 
 ## Development server
