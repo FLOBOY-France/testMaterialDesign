@@ -23,11 +23,11 @@ export class MainContentComponent implements OnInit {
         id = 1;
       this.service.users.subscribe(users => {
         if (users.length != 0) {
-          setTimeout(() => {
+
             this.user = this.service.userById(id);
             console.log(this.user);
 
-          }, 500);
+    
 
         }
 
