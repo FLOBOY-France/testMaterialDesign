@@ -7,6 +7,14 @@ import { IUser } from '../iuser';
   providedIn: 'root'
 })
 export class UserService {
+  addUser(user: IUser) : Promise<IUser>{
+    
+    return new Promise((resolver, reject) =>{
+      user.id = this.dataStore.users.length + 1;
+      this.dataStore.users.push(user);
+      resolver(user);
+    });
+  }
   userById(id: number): IUser {
     return this.dataStore.users.find(x => x.id == id);
   }

@@ -1,8 +1,9 @@
 import { LEADING_TRIVIA_CHARS } from '@angular/compiler/src/render3/view/template';
 import { Component, OnInit } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { isBuffer } from 'util';
 import { IUser } from '../../iuser';
+import { UserService } from '../../services/user.service';
 
 
 
@@ -13,23 +14,34 @@ import { IUser } from '../../iuser';
 })
 export class NewContactDialogComponent implements OnInit {
 
-avatars = ['svg-1', 'svg-2', 'svg-3', 'svg-4' ];
+  avatars = ['svg-1', 'svg-2', 'svg-3', 'svg-4'];
 
-  public user : IUser;
+  public user: IUser;
 
-  constructor(private dialogRef: MatDialogRef<NewContactDialogComponent>) {
+  constructor(private dialogRef: MatDialogRef<NewContactDialogComponent>, private userService: UserService) {
 
+  }
+  name = new FormControl('', [Validators.required]);
+
+  getErrorMessage() {
+    return 'You must enter a name';
+    //if(this.name.hasError('required'))
+    //return 'You must enter a name';
   }
 
   ngOnInit(): void {
-  this.user = {id:null, avatar: null, bio: null, birthDate: null, name: null, notes:null};
-  
-    
+    this.user = { id: null, avatar: null, bio: null, birthDate: null, name: null, notes: null };
+
+
   }
- 
+
   save(): void {
-    console.log(this.user);
-    this.dialogRef.close(this.user);
+    this.user.name = this.name.value;
+    this.userService.addUser(this.user).then(user => {
+      this.dialogRef.close(user);
+    }
+    );
+    ;
   }
   cancel(): void {
     this.dialogRef.close(null);
